@@ -1,3 +1,3 @@
-const API_URL = "http://192.168.86.201:8080";
+const API_URL = "https://expense-tracker-uso6.onrender.com/";
                  
 export default API_URL;
