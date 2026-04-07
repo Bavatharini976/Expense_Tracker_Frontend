@@ -12,11 +12,10 @@ function AddExpense({reload}) {
   e.preventDefault();
 
   const expense = {
-   id: Date.now().toString(),
-   title,
-   amount
-  };
-
+  id: Date.now().toString(),
+  title,
+  amount: Number(amount)
+};
   await axios.post(`${API_URL}/expenses`, expense, {
   headers: {
     "ngrok-skip-browser-warning": "true"
