@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import API_URL from "./api/api";
 import AddExpense from "./components/AddExpense";
-import Expense from "./components/Expense";
+import Expense from "./components/ExpenseList";
 
 function App() {
 
