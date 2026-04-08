@@ -1,28 +1,37 @@
-import React,{useState} from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import API_URL from "./api/api";
 import AddExpense from "./components/AddExpense";
-import ExpenseList from "./components/ExpenseList";
+import Expense from "./components/Expense";
 
-function App(){
+function App() {
 
- const [reload,setReload] = useState(false);
+  const [expenses, setExpenses] = useState([]);
 
- const refresh = ()=>{
-  setReload(!reload);
- };
+  const fetchExpenses = async () => {
+    try {
+      const res = await axios.get(API_URL);
+      setExpenses(res.data);
+    } catch (error) {
+      console.error("Error fetching expenses:", error);
+    }
+  };
 
- return(
+  useEffect(() => {
+    fetchExpenses();
+  }, []);
 
-  <div>
+  return (
+    <div>
+      <h1>Expense Tracker</h1>
 
-   <h1>Expense Tracker</h1>
+      <AddExpense reload={fetchExpenses} />
 
-   <AddExpense reload={refresh}/>
-   <ExpenseList key={reload}/>
-
-  </div>
-
- );
-
+      {expenses.map((exp) => (
+        <Expense key={exp.id} expense={exp} />
+      ))}
+    </div>
+  );
 }
 
 export default App;

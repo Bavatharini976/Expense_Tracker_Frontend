@@ -1,54 +1,50 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import API_URL from "../api/api";
 
-function AddExpense({reload}) {
+function AddExpense({ reload }) {
 
- const [title,setTitle] = useState("");
- const [amount,setAmount] = useState("");
+  const [title, setTitle] = useState("");
+  const [amount, setAmount] = useState("");
 
- const submit = async (e) => {
+  const submit = async (e) => {
+    e.preventDefault();
 
-  e.preventDefault();
+    try {
+      await axios.post(API_URL, {
+        title: title,
+        amount: parseFloat(amount)
+      });
 
-  const expense = {
-  id: Date.now().toString(),
-  title,
-  amount: Number(amount)
-};
-  await axios.post(`${API_URL}/expenses`, expense, {
-  headers: {
-    "ngrok-skip-browser-warning": "true"
-  }
-});
+      setTitle("");
+      setAmount("");
+      reload();
+    } catch (error) {
+      console.error("Error adding expense:", error);
+    }
+  };
 
-  setTitle("");
-  setAmount("");
+  return (
+    <form onSubmit={submit}>
+      <input
+        type="text"
+        placeholder="Expense title"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        required
+      />
 
-  reload();
- };
+      <input
+        type="number"
+        placeholder="Amount"
+        value={amount}
+        onChange={(e) => setAmount(e.target.value)}
+        required
+      />
 
- return(
-
-  <form onSubmit={submit}>
-
-   <input
-    placeholder="Title"
-    value={title}
-    onChange={(e)=>setTitle(e.target.value)}
-   />
-
-   <input
-    placeholder="Amount"
-    value={amount}
-    onChange={(e)=>setAmount(e.target.value)}
-   />
-
-   <button>Add Expense</button>
-
-  </form>
-
- );
+      <button type="submit">Add Expense</button>
+    </form>
+  );
 }
 
 export default AddExpense;
