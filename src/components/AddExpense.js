@@ -11,7 +11,7 @@ function AddExpense({ reload }) {
     e.preventDefault();
 
     try {
-      await axios.post(API_URL, {
+      await axios.post(`${API_URL}/expenses`, {
         title: title,
         amount: parseFloat(amount)
       });
@@ -19,6 +19,7 @@ function AddExpense({ reload }) {
       setTitle("");
       setAmount("");
       reload();
+
     } catch (error) {
       console.error("Error adding expense:", error);
     }

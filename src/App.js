@@ -10,7 +10,7 @@ function App() {
 
   const fetchExpenses = async () => {
     try {
-      const res = await axios.get(API_URL);
+      const res = await axios.get(`${API_URL}/expenses`);
       setExpenses(res.data);
     } catch (error) {
       console.error("Error fetching expenses:", error);
