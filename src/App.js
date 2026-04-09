@@ -28,7 +28,7 @@ function App() {
       <AddExpense reload={fetchExpenses} />
 
       {expenses.map((exp) => (
-        <Expense key={exp.id} expense={exp} />
+        <Expense key={exp.id} expense={exp} reload={fetchExpenses} />
       ))}
     </div>
   );
